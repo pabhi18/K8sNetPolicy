@@ -1,10 +1,13 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const db = require('./database.js');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors({
+  origin: 'http://localhost:3001'  // React dev server runs on 3001 by default when backend is on 3000
+}));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
