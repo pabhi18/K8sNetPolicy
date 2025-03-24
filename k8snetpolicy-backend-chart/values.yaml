@@ -1,0 +1,23 @@
+replicaCount: 1
+
+mysql:
+  databaseName: k8snetpolicy-db
+
+backendApp:
+  image:
+    repository: pabhi4881/k8snetpolicy-backend
+    pullPolicy: Always
+    tag: latest
+
+service:
+  port: "8080"  # Ensure this exists
+
+mysqlVolume:
+  persistentVolumeClaim:
+    storageSize: 500Mi  #1Gi
+
+  persistentVolume:
+    storageSize: 500Mi  #1Gi
+    pathOnHost: /var/lib/mysql  # Replace this with the actual path on your host machine
+
+  mountPath: /var/lib/mysql

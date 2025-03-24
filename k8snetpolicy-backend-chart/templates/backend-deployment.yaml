@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-backend-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-backend-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-backend-app
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-backend-app-container
+          image: {{ .Values.backendApp.image.repository }}:{{ .Values.backendApp.image.tag }}
+          imagePullPolicy: {{ .Values.backendApp.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: "k8snetpolicy-backend-mysql-service"  # ✅ Corrected MySQL service name
+            - name: DB_PORT
+              value: "3306"  # ✅ Corrected MySQL port
+            - name: DB_NAME
+              value: "todo_db"
+            - name: DB_USER
+              value: "root"
+            - name: DB_PASSWORD
+              value: "password"

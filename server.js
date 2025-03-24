@@ -3,14 +3,14 @@ const path = require('path');
 const cors = require('cors');
 const db = require('./database.js');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000; 
 
 app.use(cors({
-  origin: 'http://localhost:3001'  // React dev server runs on 3001 by default when backend is on 3000
+  origin: '*'  
 }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 
+// API routes
 app.post('/tasks', (req, res) => {
   const { title, description } = req.body;
   db.addTask(title, description, (err, id) => {
