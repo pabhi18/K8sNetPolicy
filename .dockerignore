@@ -1,0 +1,7 @@
+node_modules
+npm-debug.log   
+Readme.md
+k8snetpolicy-backend-chart
+k8snetpolicy-frontend-chart
+public
+.env
