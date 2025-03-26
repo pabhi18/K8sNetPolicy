@@ -10,7 +10,7 @@ backendApp:
     tag: latest
 
 service:
-  port: "8080"  # Ensure this exists
+  port: "8080"  
 
 mysqlVolume:
   persistentVolumeClaim:
@@ -18,6 +18,6 @@ mysqlVolume:
 
   persistentVolume:
     storageSize: 500Mi  #1Gi
-    pathOnHost: /var/lib/mysql  # Replace this with the actual path on your host machine
+    pathOnHost: /var/lib/mysql  
 
   mountPath: /var/lib/mysql

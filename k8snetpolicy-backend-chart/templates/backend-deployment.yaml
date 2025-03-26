@@ -20,9 +20,9 @@ spec:
             - containerPort: 8080
           env:
             - name: DB_HOST
-              value: "k8snetpolicy-backend-mysql-service"  # ✅ Corrected MySQL service name
+              value: "k8snetpolicy-backend-mysql-service"  
             - name: DB_PORT
-              value: "3306"  # ✅ Corrected MySQL port
+              value: "3306"  
             - name: DB_NAME
               value: "todo_db"
             - name: DB_USER
