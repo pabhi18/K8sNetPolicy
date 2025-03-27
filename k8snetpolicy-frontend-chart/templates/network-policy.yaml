@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "k8snetpolicy-frontend-chart.fullname" . }}-policy
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "k8snetpolicy-frontend-chart.selectorLabels" . | nindent 6 }}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector: {}  # Allow ingress from all namespaces (for user access)
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: {{ .Release.Name }}-backend-app  # Allow egress only to backend
+    ports:
+    - protocol: TCP
+      port: 8080 
