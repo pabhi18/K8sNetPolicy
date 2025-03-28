@@ -1,22 +1,27 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ include "k8snetpolicy-backend-chart.fullname" . }}-policy
+  name: {{ .Release.Name }}-backend-policy
 spec:
   podSelector:
     matchLabels:
-      {{- include "k8snetpolicy-backend-chart.selectorLabels" . | nindent 6 }}
+      app: k8snetpolicy-backend-backend-app
   policyTypes:
   - Ingress
   - Egress
   ingress:
   - from:
-    - namespaceSelector: {}  
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: k8snetpolicy-frontend-chart
+    ports:
+    - protocol: TCP
+      port: 8080
   egress:
   - to:
     - podSelector:
         matchLabels:
-          app: {{ .Release.Name }}-
+          app: k8snetpolicy-backend-mysql
     ports:
     - protocol: TCP
-      port: 8080 
+      port: 3306

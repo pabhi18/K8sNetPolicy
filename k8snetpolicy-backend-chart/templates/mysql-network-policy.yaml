@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .Release.Name }}-mysql-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: k8snetpolicy-backend-mysql
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: k8snetpolicy-backend-backend-app
+    ports:
+    - protocol: TCP
+      port: 3306
+
