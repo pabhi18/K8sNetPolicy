@@ -4,7 +4,20 @@ metadata:
   name: {{ .Release.Name }}-deny-all
   namespace: default
 spec:
-  podSelector: {} 
-  policyTypes:
-    - Ingress
-    - Egress
+  namespaceSelector: kubernetes.io/metadata.name not in {"calico-system", "kube-public", "kube-system", "tigera-operator"}
+  types:
+  - Ingress
+  - Egress
+  egress:
+  - action: Allow
+    protocol: UDP
+    destination:
+      selector: 'k8s-app == "kube-dns"'
+      ports:
+      - 53
+  - action: Allow
+    protocol: TCP
+    destination:
+      selector: 'k8s-app == "kube-dns"'
+      ports:
+      - 53
